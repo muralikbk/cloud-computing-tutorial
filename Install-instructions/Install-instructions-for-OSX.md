@@ -206,6 +206,8 @@ Open the file hadoop-env.sh. In this, file, uncomment the entry(remove the # in 
 This will ensure that the hadoop server will be able to start up passwordless
 *Note: JAVA_HOME in this file need not be edited for OSX. It may need to be set here or in the universal environment variable for Linux though 
 core-site.xml*
+
+#### core-site.xml
 Open the file core-site.xml. Between the `<configuration></configuration>` tags, add the following(don’t add configuration again):
 ```
 <configuration>
