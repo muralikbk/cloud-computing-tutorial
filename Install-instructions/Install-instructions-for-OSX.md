@@ -162,12 +162,17 @@ Check the status of your current RSA keys using the following command:
 ls ~/.ssh
 ```
 
-You should see the files id_rsa, id_rsa.pub (and maybe some others). If you don’t, you need to run the following command to generate an RSA key
+You should see the files id_rsa, id_rsa.pub (and maybe some others). If you don’t, you need to run the following command to generate an RSA key. You will then be prompted to type in a password, simply press enter to keep it blank.
 ```
 ssh-keygen -t rsa
 ```
 
 Once you have the RSA key files, run the following command:
+```
+cat ~/.ssh/[KEY_FILE_NAME] >> ~/.ssh/authorized_keys
+```
+
+For example:
 ```
 cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 ```
@@ -202,6 +207,8 @@ First, navigate to the folder: /**hadoop_dir**/libexec/etc/hadoop. All the files
 #### hadoop-env.sh
 Open the file hadoop-env.sh. In this, file, uncomment the entry(remove the # in front of the line):
 `export HADOOP_OPTS="$HADOOP_OPTS -Djava.net.preferIPv4Stack=true -Djava.security.krb5.realm= -Djava.security.krb5.kdc="`
+
+If you are unable to find an exact string match, `export HADOOP_OPTS="-Djava.net.preferIPv4Stack=true -Dsun.security.krb5.debug=true -Dsun.security.spnego.debug` will also suffice to uncomment.
 
 This will ensure that the hadoop server will be able to start up passwordless
 *Note: JAVA_HOME in this file need not be edited for OSX. It may need to be set here or in the universal environment variable for Linux though 
@@ -256,10 +263,16 @@ hdfs namenode -format
 ```
 
 #### Add Shortcuts to start/stop hadoop servers
-Add the following entries to the end of file **~/.zshrc**:
+Add the following entries to the end of file **~/.zshrc**, or create one in your home directory if it does not exist:
 ```
-alias hstart="/hadoop_dir/sbin/start-dfs.sh;/hadoop_dir/sbin/start-yarn.sh"
-alias hstop="/hadoop_dir/sbin/stop-yarn.sh;/hadoop_dir/sbin/stop-dfs.sh"
+alias hstart="/[HADOOP_PATH]/sbin/start-dfs.sh;/[HADOOP_PATH]/sbin/start-yarn.sh"
+alias hstop="/[HADOOP_PATH]/sbin/stop-yarn.sh;/[HADOOP_PATH]/sbin/stop-dfs.sh"
+```
+
+For example: 
+```
+alias hstart="//usr/local/Cellar/hadoop/3.3.0/sbin/sbin/start-dfs.sh;//usr/local/Cellar/hadoop/3.3.0/sbin/sbin/start-yarn.sh"
+alias hstop="//usr/local/Cellar/hadoop/3.3.0/sbin/sbin/stop-yarn.sh;//usr/local/Cellar/hadoop/3.3.0/sbin/sbin/stop-dfs.sh"
 ```
 
 While this is strictly optional, this helps start and stop hadoop and yarn servers in the correct order without needing the whole path.
