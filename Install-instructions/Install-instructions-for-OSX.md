@@ -198,11 +198,11 @@ brew install hadoop
 ```
 
 This will install Hadoop in your machine. Once installation is complete, you will likely see a location after “Installing Hadoop” - this will likely be /usr/local/Cellar/hadoop/<version>. An additional symbolic link at /usr/local/opt/hadoop will also be created to the above directory. 
-We will refer to the symbolic link as **hadoop_dir** for the next few steps.
+We will refer to the symbolic link as **[hadoop_dir]** for the next few steps.
 
 ### Configure Hadoop server
 Now you need to edit several config files to configure hadoop to run on your local host.
-First, navigate to the folder: /**hadoop_dir**/libexec/etc/hadoop. All the files below are in this folder.
+First, navigate to the folder: /**[hadoop_dir]**/libexec/etc/hadoop. All the files below are in this folder.
 
 #### hadoop-env.sh
 Open the file hadoop-env.sh. In this, file, uncomment the entry(remove the # in front of the line):
@@ -265,14 +265,14 @@ hdfs namenode -format
 #### Add Shortcuts to start/stop hadoop servers
 Add the following entries to the end of file **~/.zshrc**, or create one in your home directory if it does not exist:
 ```
-alias hstart="/[HADOOP_PATH]/sbin/start-dfs.sh;/[HADOOP_PATH]/sbin/start-yarn.sh"
-alias hstop="/[HADOOP_PATH]/sbin/stop-yarn.sh;/[HADOOP_PATH]/sbin/stop-dfs.sh"
+alias hstart="/[hadoop_dir]/sbin/start-dfs.sh;/[hadoop_dir]/sbin/start-yarn.sh"
+alias hstop="/[hadoop_dir]/sbin/stop-yarn.sh;/[hadoop_dir]/sbin/stop-dfs.sh"
 ```
 
 For example: 
 ```
-alias hstart="//usr/local/Cellar/hadoop/3.3.0/sbin/sbin/start-dfs.sh;//usr/local/Cellar/hadoop/3.3.0/sbin/sbin/start-yarn.sh"
-alias hstop="//usr/local/Cellar/hadoop/3.3.0/sbin/sbin/stop-yarn.sh;//usr/local/Cellar/hadoop/3.3.0/sbin/sbin/stop-dfs.sh"
+alias hstart="/usr/local/Cellar/hadoop/3.3.0/sbin/sbin/start-dfs.sh;/usr/local/Cellar/hadoop/3.3.0/sbin/sbin/start-yarn.sh"
+alias hstop="/usr/local/Cellar/hadoop/3.3.0/sbin/sbin/stop-yarn.sh;/usr/local/Cellar/hadoop/3.3.0/sbin/sbin/stop-dfs.sh"
 ```
 
 While this is strictly optional, this helps start and stop hadoop and yarn servers in the correct order without needing the whole path.
